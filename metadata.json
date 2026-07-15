@@ -1,0 +1,6 @@
+{
+  "name": "TreinoPro",
+  "description": "Dashboard Elite Coaching com gerenciamento de alunos, treinos, dietas, faturamento e recomendações de mensagens personalizadas geradas por Inteligência Artificial.",
+  "requestFramePermissions": ["camera"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

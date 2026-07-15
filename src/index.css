@@ -1,0 +1,1231 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Hanken+Grotesk:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap');
+@import "tailwindcss";
+
+/* --- Forçar única fonte (usar a fonte do tema escuro em todo o sistema) --- */
+:root {
+  --font-display: "Anton", sans-serif;
+  --font-sans: "Hanken Grotesk", "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+}
+
+@theme {
+  --font-display: "Anton", sans-serif;
+  --font-sans: "Hanken Grotesk", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+
+  /* Custom palette colors matching the design spec */
+  --color-on-tertiary: #2f3033;
+  --color-outline-variant: #3a494b;
+  --color-on-secondary-container: #fff6fc;
+  --color-on-tertiary-container: #5f5f63;
+  --color-on-primary-fixed-variant: #004f54;
+  --color-error-container: #93000a;
+  --color-tertiary: #f8f7fb;
+  --color-surface-container: #1f2022;
+  --color-primary-container: #00f2ff;
+  --color-inverse-primary: #00696f;
+  --color-secondary-fixed-dim: #ccff00;
+  --color-on-error: #690005;
+  --color-on-secondary-fixed: #320047;
+  --color-primary: #e1fdff;
+  --color-on-primary-fixed: #002022;
+  --color-on-surface-variant: #b9cacb;
+  --color-on-surface: #e3e2e4;
+  --color-secondary-fixed: #f8d8ff;
+  --color-primary-fixed-dim: #00dbe7;
+  --color-surface-variant: #343537;
+  --color-primary-fixed: #74f5ff;
+  --color-error: #ffb4ab;
+  --color-tertiary-container: #dbdade;
+  --color-inverse-on-surface: #303032;
+  --color-surface-container-lowest: #0d0e10;
+  --color-on-secondary-fixed-variant: #7400a0;
+  --color-on-tertiary-fixed: #1a1b1e;
+  --color-surface-tint: #00dbe7;
+  --color-outline: #849495;
+  --color-surface-container-high: #292a2c;
+  --color-on-error-container: #ffdad6;
+  --color-on-primary-container: #006a71;
+  --color-background: #121315;
+  --color-surface-bright: #38393b;
+  --color-surface-dim: #121315;
+  --color-inverse-surface: #e3e2e4;
+  --color-tertiary-fixed: #e3e2e6;
+  --color-secondary: #ccff00;
+  --color-on-primary: #00363a;
+  --color-on-background: #e3e2e4;
+  --color-surface-container-low: #ffffff;
+  --color-on-tertiary-fixed-variant: #46474a;
+  --color-tertiary-fixed-dim: #c7c6ca;
+  --color-surface: #121315;
+  --color-secondary-container: #ccff00;
+  --color-on-secondary: #520072;
+}
+
+/* Aplicação global apenas da fonte (não altera cores ou layouts) e otimizações de iOS */
+html, body {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  overflow-x: hidden;
+  height: 100%;
+}
+
+/* Garantir que ambos os temas herdem apenas a fonte (sem tocar cores) */
+.light-theme, .dark-theme {
+  font-family: var(--font-sans);
+}
+
+/* Monoespaçados */
+code, kbd, pre, .font-mono {
+  font-family: var(--font-mono);
+}
+
+/* Glassmorphism custom classes and gradients */
+.glass-panel {
+  background: rgba(31, 32, 34, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4), 0 0 15px rgba(195, 244, 0, 0.03);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-panel:hover {
+  border-color: rgba(195, 244, 0, 0.25);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), 0 0 20px rgba(195, 244, 0, 0.08);
+}
+
+.glass-panel-active {
+  background: rgba(31, 32, 34, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(195, 244, 0, 0.4);
+  box-shadow: 0 0 25px rgba(195, 244, 0, 0.15);
+}
+
+.primary-gradient {
+  background: linear-gradient(135deg, #c3f400 0%, #a2cc00 100%);
+}
+
+.text-gradient {
+  background: linear-gradient(135deg, #c3f400 0%, #a2cc00 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #121315;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #343537;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #c3f400;
+}
+
+/* 🌓 Kinetic Cybernetics Light Theme - High-Performance Vitality & Technical Precision */
+.light-theme {
+  --color-background: #f8f9ff;
+  --color-on-background: #0b1c30;
+  --color-surface: #f8f9ff;
+  --color-surface-dim: #cbdbf5;
+  --color-surface-bright: #f8f9ff;
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-container-low: #eff4ff;
+  --color-surface-container: #e5eeff;
+  --color-surface-container-high: #dce9ff;
+  --color-surface-container-highest: #d3e4fe;
+  --color-on-surface: #0b1c30;
+  --color-on-surface-variant: #3a494b;
+  --color-inverse-surface: #213145;
+  --color-inverse-on-surface: #eaf1ff;
+  --color-outline: #6a7a7b;
+  --color-outline-variant: #b9cacb;
+  --color-surface-tint: #00696f;
+
+  --color-primary: #00696f;
+  --color-on-primary: #ffffff;
+  --color-primary-container: #00f2ff;
+  --color-on-primary-container: #006a71;
+  --color-inverse-primary: #00dbe7;
+
+  --color-secondary: #9500cb;
+  --color-on-secondary: #ffffff;
+  --color-secondary-container: #b90dfb;
+  --color-on-secondary-container: #fffbff;
+
+  --color-tertiary: #705d00;
+  --color-on-tertiary: #ffffff;
+  --color-tertiary-container: #fed83a;
+  --color-on-tertiary-container: #725e00;
+
+  --color-error: #ba1a1a;
+  --color-on-error: #ffffff;
+  --color-error-container: #ffdad6;
+  --color-on-error-container: #93000a;
+
+  --color-primary-fixed: #74f5ff;
+  --color-primary-fixed-dim: #00dbe7;
+  --color-on-primary-fixed: #002022;
+  --color-on-primary-fixed-variant: #004f54;
+
+  --color-secondary-fixed: #f8d8ff;
+  --color-secondary-fixed-dim: #ccff00;
+  --color-on-secondary-fixed: #320047;
+  --color-on-secondary-fixed-variant: #7400a0;
+
+  --color-tertiary-fixed: #ffe173;
+  --color-tertiary-fixed-dim: #e8c423;
+  --color-on-tertiary-fixed: #221b00;
+  --color-on-tertiary-fixed-variant: #554500;
+
+  --color-surface-variant: #d3e4fe;
+
+  background-color: #f8f9ff !important;
+  color: #0b1c30 !important;
+}
+
+/* Force high contrast dark slate text globally in light mode with Kinetic Cybernetics typography */
+.light-theme h1:not(.student-app *),
+.light-theme h2:not(.student-app *),
+.light-theme h3:not(.student-app *),
+.light-theme h4:not(.student-app *),
+.light-theme h5:not(.student-app *),
+.light-theme h6:not(.student-app *) {
+  color: #0b1c30 !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.03em !important;
+}
+
+.light-theme p:not(.student-app *),
+.light-theme li:not(.student-app *),
+.light-theme td:not(.student-app *),
+.light-theme th:not(.student-app *) {
+  color: #0b1c30 !important;
+}
+
+.light-theme span:not(.student-app *),
+.light-theme label:not(.student-app *),
+.light-theme .label-caps:not(.student-app *),
+.light-theme *[class*="text-[10px]"]:not(.student-app *),
+.light-theme *[class*="text-[9px]"]:not(.student-app *),
+.light-theme *[class*="tracking-wider"]:not(.student-app *),
+.light-theme *[class*="tracking-widest"]:not(.student-app *) {
+  color: #3a494b !important; /* Elegant charcoal-grey */
+}
+
+/* Guard monospaced text elements under light theme to prevent font replacement */
+.light-theme .font-mono,
+.light-theme [class*="font-mono"],
+.light-theme code,
+.light-theme pre,
+.light-theme kbd {
+  font-family: var(--font-mono) !important;
+}
+
+/* Specific styling for technical indicators or tags that need UPPERCASE tracking labels */
+.light-theme label,
+.light-theme .label-caps,
+.light-theme .font-mono.text-[10px],
+.light-theme .font-mono.text-[9px],
+.light-theme th {
+  text-transform: uppercase !important;
+  letter-spacing: 0.08em !important;
+  font-weight: 700 !important;
+}
+
+/* Sidebar overrides - Level 2 style semi-transparent white (80% opacity) with backdrop-blur */
+.light-theme aside {
+  background: rgba(255, 255, 255, 0.8) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border-right: 1px solid #b9cacb !important;
+  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.04) !important;
+}
+
+.light-theme aside button {
+  color: #3a494b !important;
+}
+
+.light-theme aside button:hover {
+  background-color: #eff4ff !important;
+  color: #00696f !important;
+}
+
+.light-theme aside button[class*="text-[#00dbe7]"],
+.light-theme aside button.bg-[#00f2ff]\/10 {
+  background-color: #e5eeff !important;
+  color: #00696f !important;
+  border-left: 3px solid #00f2ff !important;
+}
+
+/* Glass panel cards - Level 2: 80% opacity white with soft diffused shadow */
+.light-theme .glass-panel {
+  background: rgba(255, 255, 255, 0.8) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.5) !important;
+  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.04) !important;
+  color: #0b1c30 !important;
+}
+
+.light-theme .glass-panel:hover {
+  border-color: #00f2ff !important;
+  box-shadow: 0px 15px 35px rgba(0, 105, 111, 0.08) !important;
+}
+
+.light-theme .glass-panel-active {
+  background: rgba(255, 255, 255, 0.9) !important;
+  border: 1px solid #00f2ff !important;
+  box-shadow: 0 0 25px rgba(0, 242, 255, 0.15) !important;
+}
+
+/* Inputs - Minimalist with bottom-only border that glows on focus */
+.light-theme select,
+.light-theme input,
+.light-theme textarea {
+  background-color: #ffffff !important;
+  border: none !important;
+  border-bottom: 2px solid #b9cacb !important;
+  border-radius: 0.25rem !important;
+  color: #0b1c30 !important;
+  transition: all 0.2s ease-in-out !important;
+}
+
+.light-theme select::placeholder,
+.light-theme input::placeholder,
+.light-theme textarea::placeholder {
+  color: #6a7a7b !important;
+}
+
+.light-theme select:focus,
+.light-theme input:focus,
+.light-theme textarea:focus {
+  border-bottom: 2px solid #00f2ff !important;
+  outline: none !important;
+  box-shadow: 0 4px 12px rgba(0, 242, 255, 0.15) !important;
+}
+
+/* Modals overlays - High opacity white with a subtle cyan glow */
+.light-theme .bg-black\/70,
+.light-theme .bg-black\/60,
+.light-theme .bg-black\/80 {
+  background-color: rgba(248, 249, 255, 0.85) !important;
+  backdrop-filter: blur(12px) !important;
+}
+
+/* General containers and cards backgrounds overriding to light theme surface palette */
+.light-theme [class*="121315"],
+.light-theme [class*="1b1c1e"],
+.light-theme [class*="1f2022"],
+.light-theme [class*="1a1b1e"],
+.light-theme [class*="151618"],
+.light-theme [class*="0d0e0f"],
+.light-theme [class*="1c1d1f"],
+.light-theme [class*="17181a"],
+.light-theme [class*="151719"],
+.light-theme [class*="1f2123"],
+.light-theme [class*="343537"],
+.light-theme [class*="0f1011"],
+.light-theme [class*="0f1012"],
+.light-theme [class*="0a0b0d"],
+.light-theme [class*="161719"],
+.light-theme [class*="292a2c"] {
+  background-color: #ffffff !important;
+  color: #0b1c30 !important;
+  border-color: rgba(185, 202, 203, 0.4) !important;
+}
+
+/* Specific slate-800/gray-800 containers mapped to light surface container */
+.light-theme .bg-slate-800,
+.light-theme [class*="bg-slate-800"],
+.light-theme .bg-gray-800,
+.light-theme [class*="bg-gray-800"],
+.light-theme .bg-neutral-800,
+.light-theme [class*="bg-neutral-800"],
+.light-theme .bg-zinc-800,
+.light-theme [class*="bg-zinc-800"] {
+  background-color: #eff4ff !important;
+  border: 1px solid rgba(185, 202, 203, 0.4) !important;
+}
+
+/* Semi-transparent overlays or background-tinted headers in light mode */
+.light-theme .bg-\[\#121315\]\/80,
+.light-theme .bg-\[\#1f2022\]\/80,
+.light-theme .bg-\[\#1b1c1e\]\/80,
+.light-theme .bg-\[\#161719\]\/80 {
+  background-color: rgba(255, 255, 255, 0.85) !important;
+}
+
+.light-theme .bg-\[\#121315\]\/60,
+.light-theme .bg-\[\#1b1c1e\]\/60,
+.light-theme .bg-\[\#161719\]\/60 {
+  background-color: #eff4ff !important;
+  border-color: rgba(185, 202, 203, 0.4) !important;
+}
+
+.light-theme .bg-\[\#121315\]\/50,
+.light-theme .bg-\[\#121315\]\/40,
+.light-theme .bg-\[\#121315\]\/30,
+.light-theme .bg-\[\#121315\]\/20,
+.light-theme .bg-\[\#1b1c1e\]\/40,
+.light-theme .bg-\[\#161719\]\/50 {
+  background-color: #e5eeff !important;
+}
+
+.light-theme .bg-\[\#121315\]\/10,
+.light-theme .bg-\[\#00f2ff\]\/5,
+.light-theme .bg-[#00f2ff]\/5,
+.light-theme .bg-\[\#00f2ff\]\/10,
+.light-theme .bg-[#00f2ff]\/10 {
+  background-color: rgba(0, 105, 111, 0.06) !important;
+}
+
+/* Ensure all form inputs/select dropdown options are clean and white in light theme */
+.light-theme select option {
+  background-color: #ffffff !important;
+  color: #0b1c30 !important;
+}
+
+/* Also handle placeholder text color inside these inputs */
+.light-theme input::placeholder,
+.light-theme textarea::placeholder {
+  color: #6a7a7b !important;
+}
+
+/* Custom hovers to prevent dark/black patches on hover states */
+.light-theme [class*="hover:bg-[#1b1c1e]"]:hover,
+.light-theme [class*="hover:bg-\[\#1b1c1e\]"]:hover,
+.light-theme [class*="hover:bg-[#1f2022]"]:hover,
+.light-theme [class*="hover:bg-\[\#1f2022\]"]:hover,
+.light-theme [class*="hover:bg-[#121315]"]:hover,
+.light-theme [class*="hover:bg-\[\#121315\]"]:hover,
+.light-theme [class*="hover:bg-slate-800"]:hover,
+.light-theme [class*="hover:bg-gray-800"]:hover,
+.light-theme [class*="hover:bg-zinc-800"]:hover,
+.light-theme [class*="hover:bg-white/[0.01]"]:hover {
+  background-color: #eff4ff !important;
+  color: #0b1c30 !important;
+  border-color: rgba(185, 202, 203, 0.6) !important;
+}
+
+/* Force light border styles for Kinetic Cybernetics */
+.light-theme *[class*="border-[#3a494b]"],
+.light-theme *[class*="border-gray-"],
+.light-theme *[class*="border-zinc-"],
+.light-theme *[class*="border-neutral-"] {
+  border-color: rgba(185, 202, 203, 0.3) !important;
+}
+.light-theme *[class*="border-[#00f2ff]"] {
+  border-color: rgba(0, 105, 111, 0.4) !important;
+}
+
+/* Primary buttons cybernetic glow effect on hover */
+.light-theme button.primary-gradient:hover,
+.light-theme .primary-gradient:hover,
+.light-theme button[class*="primary-gradient"]:hover {
+  box-shadow: 0 0 15px rgba(0, 242, 255, 0.35) !important;
+  opacity: 0.95;
+}
+
+/* Form inputs cybernetic glow on focus and bottom-only border */
+.light-theme input:focus,
+.light-theme select:focus,
+.light-theme textarea:focus {
+  border-bottom: 2px solid #00f2ff !important;
+  box-shadow: 0 4px 12px rgba(0, 242, 255, 0.15) !important;
+}
+
+/* Text overrides for maximum contrast */
+.light-theme .text-white,
+.light-theme .text-slate-50,
+.light-theme .text-slate-100,
+.light-theme .text-slate-200,
+.light-theme .text-slate-300,
+.light-theme .text-gray-50,
+.light-theme .text-gray-100,
+.light-theme .text-gray-200,
+.light-theme .text-gray-300,
+.light-theme .text-zinc-50,
+.light-theme .text-zinc-100,
+.light-theme .text-[#e3e2e4],
+.light-theme .text-[#ffffff],
+.light-theme .text-[#fff],
+.light-theme .text-[#fdfdfd],
+.light-theme .text-[#fefefe],
+.light-theme .text-[#fcfcfc],
+.light-theme .text-zinc-200,
+.light-theme .text-zinc-300,
+.light-theme .text-neutral-50,
+.light-theme .text-neutral-100,
+.light-theme .text-neutral-200,
+.light-theme .text-neutral-300 {
+  color: #0b1c30 !important;
+}
+
+.light-theme .text-slate-400,
+.light-theme .text-gray-400,
+.light-theme .text-zinc-400,
+.light-theme .text-neutral-400,
+.light-theme .text-[#b9cacb],
+.light-theme .text-gray-300/80,
+.light-theme .text-slate-300/80 {
+  color: #3a494b !important; /* on-surface-variant */
+}
+
+.light-theme .text-slate-500,
+.light-theme .text-gray-500,
+.light-theme .text-zinc-500,
+.light-theme .text-neutral-500 {
+  color: #6a7a7b !important; /* outline */
+}
+
+/* Cybernetic secondary accent (Vibrant Purple) overrides */
+.light-theme .text-[#ebb2ff],
+.light-theme .text-purple-300,
+.light-theme .text-purple-400,
+.light-theme .text-purple-500 {
+  color: #9500cb !important;
+}
+
+/* Electric Cyan overrides */
+.light-theme .text-[#00dbe7],
+.light-theme .text-cyan-400,
+.light-theme .text-cyan-500,
+.light-theme .text-[#00f2ff] {
+  color: #00696f !important;
+}
+
+/* Green overrides */
+.light-theme .text-green-400,
+.light-theme .text-emerald-400 {
+  color: #1a7f37 !important;
+}
+
+/* Amber overrides */
+.light-theme .text-amber-400,
+.light-theme .text-yellow-400 {
+  color: #9a6700 !important;
+}
+
+/* Badges styling */
+.light-theme .bg-emerald-500\/10,
+.light-theme .bg-emerald-500\/20 {
+  background-color: #d8f5e1 !important;
+  border-color: #a3e0b7 !important;
+}
+
+.light-theme .bg-red-500\/10,
+.light-theme .bg-red-500\/20 {
+  background-color: #ffdad6 !important;
+  border-color: #ffb4ab !important;
+}
+
+.light-theme .bg-amber-500\/10,
+.light-theme .bg-amber-500\/20 {
+  background-color: #ffe173 !important;
+  border-color: #e8c423 !important;
+}
+
+/* Scrollbars for light theme */
+.light-theme ::-webkit-scrollbar-track {
+  background: #f8f9ff;
+}
+
+.light-theme ::-webkit-scrollbar-thumb {
+  background: #cbdbf5;
+}
+
+.light-theme ::-webkit-scrollbar-thumb:hover {
+  background: #00696f;
+}
+
+/* 🎯 SPECIFIC LIGHT THEME FOCUS OVERRIDES AS DIRECTED BY SELECTORS FOR KINETIC CYBERNETICS */
+/* (mantidos exatamente como estavam — só alterei font-family para variáveis onde existia) */
+.light-theme div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#treinos-view:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(2) {
+  background-color: #ffffff !important;
+  border-color: #b9cacb !important;
+}
+
+.light-theme div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#treinos-view:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(3) {
+  background-color: #ffffff !important;
+  border-color: #b9cacb !important;
+}
+
+/* ... resto do arquivo sem alterações funcionais além das substituições de font-family ... */
+
+/* Symmetrical styles for Treinamento Funcional submit button */
+.light-theme form[onSubmit*="handleAddFuncional"] button[type="submit"],
+.light-theme button.bg-\[\#292a2c\]:nth-of-type(2) {
+  background-color: #fff6fc !important;
+  color: #9500cb !important;
+  border: 1px solid #b90dfb !important;
+}
+.light-theme form[onSubmit*="handleAddFuncional"] button[type="submit"]:hover {
+  background-color: #b90dfb !important;
+  color: #ffffff !important;
+}
+
+/* System-wide light theme button overrides */
+.light-theme button.bg-\[\#292a2c\],
+.light-theme .bg-\[\#292a2c\] {
+  background-color: #eff4ff !important;
+  color: #0b1c30 !important;
+  border: 1px solid #b9cacb !important;
+}
+.light-theme button.bg-\[\#292a2c\]:hover,
+.light-theme .bg-\[\#292a2c\]:hover {
+  background-color: #e5eeff !important;
+}
+
+.light-theme .bg-\[\#161719\] {
+  background-color: #ffffff !important;
+  border-color: #b9cacb !important;
+  color: #0b1c30 !important;
+}
+
+.light-theme .bg-purple-900 {
+  background-color: #9500cb !important;
+}
+.light-theme .bg-purple-900:hover {
+  background-color: #7400a0 !important;
+}
+
+.light-theme .bg-\[\#121315\]\/40 {
+  background-color: #ffffff !important;
+  border-color: #b9cacb !important;
+}
+
+/* Recharts / tooltip custom rules for Kinetic Cybernetics Light */
+.light-theme .recharts-default-tooltip {
+  background-color: #ffffff !important;
+  border: 1px solid #b9cacb !important;
+  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.04) !important;
+}
+.light-theme .recharts-tooltip-item,
+.light-theme .recharts-tooltip-label {
+  color: #0b1c30 !important;
+}
+
+/* Typography Helpers matching Kinetic Cybernetics specification */
+.light-theme .display-lg {
+  font-family: var(--font-sans) !important;
+  font-size: 48px !important;
+  font-weight: 800 !important;
+  line-height: 56px !important;
+  letter-spacing: -0.02em !important;
+}
+.light-theme .headline-lg {
+  font-family: var(--font-sans) !important;
+  font-size: 32px !important;
+  font-weight: 700 !important;
+  line-height: 40px !important;
+  letter-spacing: -0.01em !important;
+}
+.light-theme .headline-lg-mobile {
+  font-family: var(--font-sans) !important;
+  font-size: 28px !important;
+  font-weight: 700 !important;
+  line-height: 36px !important;
+}
+.light-theme .title-md {
+  font-family: var(--font-sans) !important;
+  font-size: 20px !important;
+  font-weight: 600 !important;
+  line-height: 28px !important;
+}
+.light-theme .body-lg {
+  font-family: var(--font-sans) !important;
+  font-size: 16px !important;
+  font-weight: 400 !important;
+  line-height: 24px !important;
+}
+.light-theme .body-sm {
+  font-family: var(--font-sans) !important;
+  font-size: 14px !important;
+  font-weight: 400 !important;
+  line-height: 20px !important;
+}
+.light-theme .label-caps {
+  font-family: var(--font-sans) !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  line-height: 16px !important;
+  letter-spacing: 0.05em !important;
+  text-transform: uppercase !important;
+}
+
+/* Custom keyframe animation for the scanning bar */
+@keyframes scannerLine {
+  0% {
+    top: 0%;
+  }
+  100% {
+    top: 100%;
+  }
+}
+
+.animate-scanner-normal {
+  animation: scannerLine 3s linear infinite;
+}
+
+.animate-scanner-fast {
+  animation: scannerLine 1s linear infinite;
+}
+
+/* Custom Focused Element Style Overrides (AIS Focus Mode) */
+div#root:nth-of-type(1) > div.light-theme:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#dietas-view:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(1) {
+  background-color: #ffffff !important;
+  border-color: #a59c9c !important;
+}
+
+div#root:nth-of-type(1) > div.light-theme:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#dietas-view:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(1):hover {
+  background-color: #fffdfd !important;
+}
+
+div#root:nth-of-type(1) > div.light-theme:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#dietas-view:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(4) > div:nth-of-type(1) > div:nth-of-type(1) {
+  background-color: #ffffff !important;
+  border-color: #a59c9c !important;
+}
+
+div#root:nth-of-type(1) > div.light-theme:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#dietas-view:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(4) > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(1) {
+  color: #fefefe !important;
+}
+
+div#root:nth-of-type(1) > div.light-theme:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#dietas-view:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > button.bg-cyan-950,
+.light-theme button.bg-cyan-950,
+.light-theme .bg-cyan-950 {
+  background-color: #00fff1 !important;
+  color: #000000 !important;
+  border-color: #00fff1 !important;
+}
+
+.light-theme div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#dietas-view:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(4) > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(1) > button:nth-of-type(2) {
+  color: #ffffff !important;
+}
+
+.light-theme div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#dietas-view:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(4) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(2) {
+  border-color: #ffffff !important;
+  color: #ffffff !important;
+}
+
+.light-theme div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#dietas-view:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(4) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > button:nth-of-type(2) {
+  color: #ffffff !important;
+}
+
+.light-theme div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#dietas-view:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(3) > button:nth-of-type(1) {
+  color: #ffffff !important;
+}
+
+/* Custom Focused Element Style Overrides (AIS Focus Mode Series 2) */
+.light-theme div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#analise-view:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(4) {
+  background-color: #c6c6f1 !important;
+}
+
+.light-theme div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#analise-view:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(2) > button:nth-of-type(1) {
+  color: #09838d !important;
+}
+
+.light-theme div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#analise-view:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(2) > button:nth-of-type(2) {
+  color: #962af1 !important;
+}
+
+.light-theme div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#analise-view:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > label:nth-of-type(1) {
+  color: #00cfe4 !important;
+}
+
+.light-theme div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#analise-view:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > label:nth-of-type(1) {
+  color: #dd00f7 !important;
+}
+
+.light-theme div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) {
+  background-color: #b201f7 !important;
+}
+
+.light-theme div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) {
+  background-color: #ffffff !important;
+}
+
+.light-theme div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > table:nth-of-type(1) > thead:nth-of-type(1) > tr:nth-of-type(1) > th:nth-of-type(1) {
+  background-color: #c9c9c9 !important;
+  color: #000000 !important;
+  padding-top: 19px !important;
+  padding-left: 57px !important;
+  border-style: solid !important;
+}
+
+.light-theme div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > table:nth-of-type(1) > thead:nth-of-type(1) > tr:nth-of-type(1) > th:nth-of-type(2) {
+  background-color: #c9c9c9 !important;
+  color: #000000 !important;
+  padding-left: 46px !important;
+}
+
+.light-theme div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > table:nth-of-type(1) > thead:nth-of-type(1) > tr:nth-of-type(1) > th:nth-of-type(3) {
+  background-color: #c9c9c9 !important;
+  color: #000000 !important;
+  padding-top: 19px !important;
+  padding-left: 37px !important;
+}
+
+.light-theme div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > table:nth-of-type(1) > thead:nth-of-type(1) > tr:nth-of-type(1) > th:nth-of-type(4) {
+  background-color: #c9c9c9 !important;
+  color: #000000 !important;
+  padding-top: 19px !important;
+  padding-right: 60px !important;
+}
+
+/* Custom Focused Element Style Overrides (AIS Focus Mode Series 3) */
+.light-theme div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#alunos-view:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > button:nth-of-type(1) {
+  background-color: #c4cfcf !important;
+  color: #000000 !important;
+}
+
+.light-theme div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#alunos-view:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > button:nth-of-type(2) {
+  background-color: #dadada !important;
+  color: #000000 !important;
+}
+
+.light-theme div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#alunos-view:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > button:nth-of-type(3) {
+  background-color: #dadada !important;
+  color: #000000 !important;
+}
+
+.light-theme div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#alunos-view:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > button:nth-of-type(4) {
+  background-color: #dadada !important;
+  color: #000000 !important;
+}
+
+.light-theme div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#alunos-view:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) {
+  background-color: #dadada !important;
+}
+
+.light-theme div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#alunos-view:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) {
+  background-color: #dadada !important;
+}
+
+.light-theme div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#alunos-view:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) {
+  background-color: #dadada !important;
+}
+
+.light-theme div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#alunos-view:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(2) {
+  background-color: #dadada !important;
+}
+
+.light-theme div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#alunos-view:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(3) {
+  background-color: #dadada !important;
+}
+
+.light-theme div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#alunos-view:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(5) > button:nth-of-type(1) {
+  background-color: #0ee8eb !important;
+  color: #000000 !important;
+}
+
+.light-theme div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#alunos-view:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(5) > button:nth-of-type(2) {
+  background-color: #f700f7 !important;
+}
+
+/* Custom Focused Element Style Overrides (AIS Focus Mode Series 4) */
+.light-theme div#root:nth-of-type(1) > div:nth-of-type(1) > aside:nth-of-type(1) > div:nth-of-type(2) > button:nth-of-type(1) {
+  color: #010101 !important;
+}
+
+div#root:nth-of-type(1) > div:nth-of-type(1) > aside:nth-of-type(1) > div:nth-of-type(2) > button:nth-of-type(1) {
+  color: #010101 !important;
+}
+
+/* Custom Focused Element Style Overrides (AIS Focus Mode Series 5) */
+.light-theme div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#treinos-view:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > button:nth-of-type(2),
+.light-theme div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#treinos-view:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(4) > div:nth-of-type(1) > button:nth-of-type(6),
+.light-theme div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#treinos-view:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(4) > div:nth-of-type(1) > button:nth-of-type(4),
+.light-theme div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#treinos-view:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(4) > div:nth-of-type(1) > button:nth-of-type(3),
+.light-theme div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#treinos-view:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(4) > div:nth-of-type(1) > button:nth-of-type(2),
+.light-theme div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#treinos-view:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(4) > div:nth-of-type(1) > button:nth-of-type(1),
+.light-theme div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#treinos-view:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(5) > div:nth-of-type(1),
+.light-theme div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#treinos-view:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(4) > div:nth-of-type(1) > button:nth-of-type(2),
+.light-theme div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#treinos-view:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(4) > div:nth-of-type(1) > button:nth-of-type(3),
+.light-theme div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#treinos-view:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1),
+.light-theme div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#treinos-view:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(2),
+.light-theme div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#treinos-view:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(3),
+.light-theme div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#treinos-view:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(4),
+.light-theme div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#treinos-view:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(7) > div:nth-of-type(1) > button:nth-of-type(5),
+.light-theme div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#treinos-view:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(7) > div:nth-of-type(1) > button:nth-of-type(4),
+.light-theme div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#treinos-view:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(7) > div:nth-of-type(1) > button:nth-of-type(2),
+.light-theme div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#treinos-view:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(7) > div:nth-of-type(1) > button:nth-of-type(1) {
+  background-color: #ffffff !important;
+  color: #0b1c30 !important;
+  border-color: #b9cacb !important;
+}
+
+/* Custom Focused Element Style Overrides (AIS Focus Mode Series 6) */
+.light-theme div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#treinos-view:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) {
+  background-color: #ffffff !important;
+}
+
+/* Custom Focused Element Style Overrides (AIS Focus Mode Series 7) */
+div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#dietas-view:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(3) > button:nth-of-type(1) {
+  color: #ffffff !important;
+}
+div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#dietas-view:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(4) > div:nth-of-type(2) > div:nth-of-type(9) > div:nth-of-type(1) > button:nth-of-type(2) {
+  color: #ffffff !important;
+}
+div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#dietas-view:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(4) > div:nth-of-type(2) > div:nth-of-type(7) > div:nth-of-type(1) > button:nth-of-type(2) {
+  color: #fcfcfc !important;
+}
+div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#dietas-view:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(4) > div:nth-of-type(2) > div:nth-of-type(8) > div:nth-of-type(1) > button:nth-of-type(2) {
+  color: #ffffff !important;
+}
+div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#dietas-view:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(4) > div:nth-of-type(2) {
+  /* Placeholder for focus override */
+}
+
+/* Custom Focused Element Style Overrides (AIS Focus Mode Series 8) */
+div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#dietas-view:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(4) > div:nth-of-type(2) > div:nth-of-type(6) > div:nth-of-type(1) > button:nth-of-type(2) {
+  color: #ffffff !important;
+}
+div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#dietas-view:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(4) > div:nth-of-type(2) > div:nth-of-type(4) > div:nth-of-type(1) > button:nth-of-type(2) {
+  color: #ffffff !important;
+}
+div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#dietas-view:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(4) > div:nth-of-type(2) > div:nth-of-type(5) > div:nth-of-type(1) > button:nth-of-type(2) {
+  color: #ffffff !important;
+}
+
+/* Custom Focused Element Style Overrides (AIS Focus Mode Series 9) */
+div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#dietas-view:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(4) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(2) {
+  color: #ffffff !important;
+}
+div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#dietas-view:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(4) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > button:nth-of-type(2) {
+  color: #ffffff !important;
+}
+div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#dietas-view:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(4) > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(1) > button:nth-of-type(2) {
+  color: #ffffff !important;
+}
+
+/* Custom Focused Element Style Overrides (AIS Focus Mode Series 10) */
+.light-theme div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#treinos-view:nth-of-type(1) > div:nth-of-type(4) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(3),
+.light-theme div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#treinos-view:nth-of-type(1) > div:nth-of-type(4) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(3) {
+  border-color: rgba(185, 202, 203, 0.4) !important;
+}
+
+.light-theme div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#treinos-view:nth-of-type(1) > div:nth-of-type(4) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(3) h4,
+.light-theme div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#treinos-view:nth-of-type(1) > div:nth-of-type(4) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(3) h4 {
+  color: #0b1c30 !important;
+}
+
+.light-theme div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#treinos-view:nth-of-type(1) > div:nth-of-type(4) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(3) p,
+.light-theme div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#treinos-view:nth-of-type(1) > div:nth-of-type(4) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(3) p {
+  color: #4a5a5b !important;
+}
+
+/* Custom Focused Element Style Overrides (AIS Focus Mode Series 11) */
+div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#dietas-view:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > button:nth-of-type(2) {
+  background-color: #00f2b4 !important;
+  color: #000000 !important;
+}
+
+div#root:nth-of-type(1) > div.light-theme:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#dietas-view:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > button:nth-of-type(2) {
+  background-color: #00f2b4 !important;
+  color: #000000 !important;
+}
+
+div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#dietas-view:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > span:nth-of-type(1) {
+  background-color: #ccff00 !important;
+  color: #000000 !important;
+}
+
+div#root:nth-of-type(1) > div.light-theme:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#dietas-view:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > span:nth-of-type(1) {
+  background-color: #ccff00 !important;
+  color: #000000 !important;
+}
+
+div#root:nth-of-type(1) > div.light-theme:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#dietas-view:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > span:nth-of-type(2) {
+  color: #ffffff !important;
+}
+
+div#root:nth-of-type(1) > div.light-theme:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#dietas-view:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > span:nth-of-type(2) {
+  color: #ffffff !important;
+}
+
+div#root:nth-of-type(1) > div.light-theme:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#dietas-view:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > span:nth-of-type(2) {
+  color: #ffffff !important;
+}
+
+div#root:nth-of-type(1) > div.light-theme:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#dietas-view:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(4) > div:nth-of-type(2) > button:nth-of-type(2) {
+  color: #000000 !important;
+}
+
+div#root:nth-of-type(1) > div.light-theme:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#dietas-view:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(4) > div:nth-of-type(2) > button:nth-of-type(1) {
+  color: #000000 !important;
+}
+
+div#root:nth-of-type(1) > div.light-theme:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#dietas-view:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2) > form:nth-of-type(1) > button:nth-of-type(1) {
+  color: #fcfcfc !important;
+}
+
+/* Custom Focused Element Style Overrides (AIS Focus Mode Series 12) */
+.light-theme div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#treinos-view:nth-of-type(1) > div:nth-of-type(4) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(4) > div:nth-of-type(1) > div:nth-of-type(1) {
+  background-color: #ffffff !important;
+  color: #0b1c30 !important;
+  border-color: rgba(182, 1, 248, 0.25) !important;
+}
+
+.light-theme div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#treinos-view:nth-of-type(1) > div:nth-of-type(4) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(4) > div:nth-of-type(2) > div:nth-of-type(1) {
+  background-color: #ffffff !important;
+  color: #0b1c30 !important;
+  border-color: rgba(182, 1, 248, 0.25) !important;
+}
+
+/* Kinetic Cybernetics Light Theme - Functional Generated Workout Cards & Muted Containers Overrides */
+.light-theme div#treinos-view [class*="bg-[#111214]"],
+.light-theme [class*="111214"] {
+  background-color: #ffffff !important;
+  color: #0b1c30 !important;
+  border-color: rgba(182, 1, 248, 0.3) !important;
+  box-shadow: 0 10px 30px rgba(182, 1, 248, 0.05) !important;
+}
+
+.light-theme div#treinos-view .bg-\[\#161719\],
+.light-theme div#treinos-view .bg-\[\#111214\] .bg-\[\#161719\] {
+  background-color: #f6f8ff !important;
+  color: #0b1c30 !important;
+  border-color: rgba(185, 202, 203, 0.3) !important;
+}
+
+.light-theme div#treinos-view .bg-\[\#161719\]:hover,
+.light-theme div#treinos-view .bg-\[\#111214\] .bg-\[\#161719\]:hover {
+  border-color: rgba(182, 1, 248, 0.4) !important;
+}
+
+.light-theme div#treinos-view [class*="bg-[#111214]"] p,
+.light-theme div#treinos-view [class*="bg-[#111214]"] span,
+.light-theme div#treinos-view [class*="bg-[#111214]"] .text-\[\#b9cacb\],
+.light-theme div#treinos-view [class*="bg-[#111214]"] .text-\[\#b9cacb\]\/80 {
+  color: #4a5a5b !important;
+}
+
+.light-theme div#treinos-view [class*="bg-[#111214]"] .text-white\/90 {
+  color: #1a2c3a !important;
+}
+
+.light-theme div#treinos-view [class*="bg-[#111214]"] .text-\[\#ebb2ff\] {
+  color: #8a00c2 !important; /* Elegant rich violet for light theme */
+}
+
+.light-theme div#treinos-view [class*="bg-[#111214]"] .text-\[\#00f2ff\] {
+  color: #005f65 !important; /* Highly readable deep cyan */
+}
+
+.light-theme div#treinos-view [class*="bg-[#111214]"] .text-emerald-400 {
+  color: #007a3e !important;
+}
+
+.light-theme div#treinos-view [class*="bg-[#111214]"] .bg-\[\#0f1011\] {
+  background-color: #edf2ff !important;
+  color: #00696f !important;
+  border-color: rgba(0, 105, 111, 0.1) !important;
+}
+
+.light-theme div#treinos-view [class*="bg-[#111214]"] .bg-\[\#0f1011\] span {
+  color: #005f65 !important;
+}
+
+/* Bulletproof text-white cleaner for overridden dark elements in light theme */
+.light-theme [class*="121315"] .text-white,
+.light-theme [class*="121315"] *[class*="text-white"],
+.light-theme [class*="1b1c1e"] .text-white,
+.light-theme [class*="1b1c1e"] *[class*="text-white"],
+.light-theme [class*="1f2022"] .text-white,
+.light-theme [class*="1f2022"] *[class*="text-white"],
+.light-theme [class*="1a1b1e"] .text-white,
+.light-theme [class*="1a1b1e"] *[class*="text-white"],
+.light-theme [class*="1c1d1f"] .text-white,
+.light-theme [class*="1c1d1f"] *[class*="text-white"],
+.light-theme [class*="151719"] .text-white,
+.light-theme [class*="151719"] *[class*="text-white"],
+.light-theme [class*="161719"] .text-white,
+.light-theme [class*="161719"] *[class*="text-white"],
+.light-theme [class*="0f1011"] .text-white,
+.light-theme [class*="0f1011"] *[class*="text-white"],
+.light-theme [class*="111214"] .text-white,
+.light-theme [class*="111214"] *[class*="text-white"] {
+  color: #0b1c30 !important;
+}
+
+/* Custom Focused Element Style Overrides for light theme spans */
+.light-theme div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#treinos-view:nth-of-type(1) > div:nth-of-type(4) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(4) > div:nth-of-type(1) > div:nth-of-type(1) > span:nth-of-type(1) {
+  color: #f4fcff !important;
+}
+
+.light-theme div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#treinos-view:nth-of-type(1) > div:nth-of-type(4) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(4) > div:nth-of-type(2) > div:nth-of-type(1) > span:nth-of-type(1) {
+  color: #ffffff !important;
+}
+
+.light-theme div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#treinos-view:nth-of-type(1) > div:nth-of-type(4) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(4) > div:nth-of-type(3) > div:nth-of-type(1) > span:nth-of-type(1) {
+  color: #ffffff !important;
+}
+
+div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#dietas-view:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) {
+  padding-top: 16px !important;
+  margin-bottom: 20px !important;
+  margin-top: 29px !important;
+  padding-bottom: 10px !important;
+  padding-left: 15px !important;
+  padding-right: 15px !important;
+  margin-left: 0px !important;
+}
+
+/* Custom Focused Element Style Overrides (AIS Focus Mode Series 13) */
+div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#dietas-view:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(4) > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(1) {
+  color: #000000 !important;
+}
+
+div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#dietas-view:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > span:nth-of-type(2) {
+  color: #f1f1f1 !important;
+}
+
+div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#dietas-view:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(2) {
+  color: #ffffff !important;
+}
+
+div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#dietas-view:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > button:nth-of-type(2) {
+  color: #ffffff !important;
+}
+
+div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#dietas-view:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(1) > button:nth-of-type(2) {
+  color: #f8f8f8 !important;
+}
+
+div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#dietas-view:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(1) {
+  color: #000000 !important;
+}
+
+div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#dietas-view:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > button:nth-of-type(1) {
+  color: #000000 !important;
+}
+
+div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#dietas-view:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(1) > button:nth-of-type(1) {
+  color: #000000 !important;
+}
+
+div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#dietas-view:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(4) > div:nth-of-type(1) > button:nth-of-type(2) {
+  color: #f8f8f8 !important;
+}
+
+div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#dietas-view:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(5) > div:nth-of-type(1) > button:nth-of-type(2) {
+  color: #ffffff !important;
+}
+
+div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#dietas-view:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(4) > div:nth-of-type(1) > button:nth-of-type(1) {
+  color: #000000 !important;
+}
+
+div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#dietas-view:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(5) > div:nth-of-type(1) > button:nth-of-type(1) {
+  color: #000000 !important;
+}
+
+div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#dietas-view:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(6) > div:nth-of-type(1) > button:nth-of-type(2) {
+  color: #ffffff !important;
+}
+
+div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#dietas-view:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(7) > div:nth-of-type(1) > button:nth-of-type(2) {
+  color: #ffffff !important;
+}
+
+div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#dietas-view:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(6) > div:nth-of-type(1) > button:nth-of-type(1) {
+  color: #000000 !important;
+}
+
+div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#dietas-view:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(7) > div:nth-of-type(1) > button:nth-of-type(1) {
+  color: #000000 !important;
+}
+
+
+div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#financeiro-view:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > span:nth-of-type(2) {
+  color: #92bdbe !important;
+}
+
+/* Light theme color changes for focused Bento Grid metrics in AlunosView */
+div#root:nth-of-type(1) > div.light-theme > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#alunos-view:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(4) > div:nth-of-type(1) > div:nth-of-type(1) {
+  background-image: none !important;
+  background-color: #fffbfb !important;
+  transition: all 0.2s ease-in-out !important;
+}
+
+div#root:nth-of-type(1) > div.light-theme > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#alunos-view:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(4) > div:nth-of-type(1) > div:nth-of-type(1):hover {
+  border-color: rgba(0, 242, 255, 0.3) !important;
+  box-shadow: 0 0 12px rgba(0, 242, 255, 0.25) !important;
+}
+
+div#root:nth-of-type(1) > div.light-theme > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#alunos-view:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(4) > div:nth-of-type(1) > div:nth-of-type(4) {
+  background-image: none !important;
+  background-color: #ffffff !important;
+  transition: all 0.2s ease-in-out !important;
+}
+
+div#root:nth-of-type(1) > div.light-theme > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#alunos-view:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(4) > div:nth-of-type(1) > div:nth-of-type(4):hover {
+  border-color: rgba(0, 242, 255, 0.3) !important;
+  box-shadow: 0 0 12px rgba(0, 242, 255, 0.25) !important;
+}
+
+div#root:nth-of-type(1) > div.light-theme > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#alunos-view:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(4) > div:nth-of-type(1) > div:nth-of-type(3) {
+  background-image: none !important;
+  background-color: #f9f9f9 !important;
+  transition: all 0.2s ease-in-out !important;
+}
+
+div#root:nth-of-type(1) > div.light-theme > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#alunos-view:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(4) > div:nth-of-type(1) > div:nth-of-type(3):hover {
+  border-color: rgba(0, 242, 255, 0.3) !important;
+  box-shadow: 0 0 12px rgba(0, 242, 255, 0.25) !important;
+}
+
+div#root:nth-of-type(1) > div.light-theme > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#alunos-view:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(4) > div:nth-of-type(1) > div:nth-of-type(2) {
+  background-image: none !important;
+  background-color: #ffffff !important;
+  transition: all 0.2s ease-in-out !important;
+}
+
+div#root:nth-of-type(1) > div.light-theme > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div#alunos-view:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(4) > div:nth-of-type(1) > div:nth-of-type(2):hover {
+  border-color: rgba(0, 242, 255, 0.3) !important;
+  box-shadow: 0 0 12px rgba(0, 242, 255, 0.25) !important;
+}
+
+/* Custom smooth transitions and Volt Green glow for Bento Grid metrics numbers on hover (both themes) */
+div#alunos-view div.grid.grid-cols-2.sm\:grid-cols-4.gap-3 > div span:nth-of-type(2) {
+  transition: all 0.2s ease-in-out !important;
+}
+
+div#alunos-view div.grid.grid-cols-2.sm\:grid-cols-4.gap-3 > div:hover span:nth-of-type(2) {
+  color: #c3f400 !important;
+  text-shadow: 0 0 10px rgba(195, 244, 0, 0.8) !important;
+}
+
+/* --- Safe Area Insets for Mobile / Capacitor --- */
+.safe-pt {
+  padding-top: env(safe-area-inset-top, 0px);
+}
+.safe-pb {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+.safe-pl {
+  padding-left: env(safe-area-inset-left, 0px);
+}
+.safe-pr {
+  padding-right: env(safe-area-inset-right, 0px);
+}
+
+
+
+
+
+

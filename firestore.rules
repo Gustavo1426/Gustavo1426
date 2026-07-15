@@ -1,0 +1,128 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // 1. Default-deny catch-all safety net (Hardened for production security to reject unauthorized, untracked, and anonymous traffic)
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // --- Helpers (ABAC/RBAC primitives) ---
+    
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function emailVerified() {
+      return isSignedIn() && request.auth.token.email != null;
+    }
+
+    // Verify if the user matches the Coach's email defined in global settings
+    function isCoach() {
+      return emailVerified() && (
+        (exists(/databases/$(database)/documents/settings/global_settings) && (request.auth.token.email == get(/databases/$(database)/documents/settings/global_settings).data.email)) ||
+        request.auth.token.email == "rodrigo@treinopro.com" ||
+        request.auth.token.email == "gustavoworkout85@gmail.com"
+      );
+    }
+
+    // Check if the current user owns this student profile or matches the student email
+    function isOwnerOfStudent(studentId) {
+      return emailVerified() && (
+        (resource != null && resource.data.email == request.auth.token.email) ||
+        (request.resource != null && request.resource.data.email == request.auth.token.email) ||
+        (exists(/databases/$(database)/documents/students/$(studentId)) && get(/databases/$(database)/documents/students/$(studentId)).data.email == request.auth.token.email)
+      );
+    }
+
+    // Check if the student ID referenced in the resource belongs to the current user
+    function isOwnerOfData(studentId) {
+      return emailVerified() && (
+        (exists(/databases/$(database)/documents/students/$(studentId)) && get(/databases/$(database)/documents/students/$(studentId)).data.email == request.auth.token.email)
+      );
+    }
+
+    // --- Collections ---
+
+    // Students profiles
+    match /students/{studentId} {
+      allow read, write: if isCoach() || isOwnerOfStudent(studentId);
+    }
+
+    // Workouts sheets
+    match /workouts/{workoutId} {
+      allow read, write: if isCoach() || 
+        (resource != null && isOwnerOfData(resource.data.studentId)) || 
+        (request.resource != null && isOwnerOfData(request.resource.data.studentId));
+    }
+
+    // Diets sheets
+    match /diets/{dietId} {
+      allow read, write: if isCoach() || 
+        (resource != null && isOwnerOfData(resource.data.studentId)) || 
+        (request.resource != null && isOwnerOfData(request.resource.data.studentId));
+    }
+
+    // Payments records
+    match /payments/{paymentId} {
+      allow read, write: if isCoach() || 
+        (resource != null && isOwnerOfData(resource.data.studentId)) || 
+        (request.resource != null && isOwnerOfData(request.resource.data.studentId));
+    }
+
+    // Chat histories
+    match /chat_histories/{chatHistoryId} {
+      allow read, write: if isCoach() || 
+        (resource != null && (resource.data.studentId == request.auth.uid || isOwnerOfData(resource.data.studentId) || isOwnerOfData(chatHistoryId))) ||
+        (request.resource != null && (request.resource.data.studentId == request.auth.uid || isOwnerOfData(request.resource.data.studentId) || isOwnerOfData(chatHistoryId))) ||
+        isOwnerOfData(chatHistoryId);
+    }
+
+    // Students Gamification details
+    match /students_gamification/{gamificationId} {
+      allow read, write: if isCoach() || 
+        (resource != null && (resource.data.studentId == request.auth.uid || isOwnerOfData(resource.data.studentId) || isOwnerOfData(gamificationId))) ||
+        (request.resource != null && (request.resource.data.studentId == request.auth.uid || isOwnerOfData(request.resource.data.studentId) || isOwnerOfData(gamificationId))) ||
+        isOwnerOfData(gamificationId);
+    }
+
+    // Subscription Plans
+    match /plans/{planId} {
+      allow read: if isSignedIn();
+      allow write: if isCoach();
+    }
+
+    // Active Challenges
+    match /challenges/{challengeId} {
+      allow read: if isSignedIn();
+      allow write: if isCoach();
+    }
+
+    // Settings
+    match /settings/{settingId} {
+      allow read: if isSignedIn();
+      allow write: if isCoach() || (isSignedIn() && settingId == 'global_settings');
+    }
+
+    // System Telemetry
+    match /system_telemetry/{telemetryId} {
+      allow create: if true;
+      allow read: if isCoach();
+    }
+
+    // Periodization Scientific Module
+    match /periodizations/{studentId} {
+      allow read, write: if isCoach() || isOwnerOfStudent(studentId);
+    }
+
+    // Postural Evaluations Module
+    match /postural_evaluations/{studentId} {
+      allow read, write: if isCoach() || isOwnerOfStudent(studentId);
+    }
+
+    // Physical Evaluations Module
+    match /physical_evaluations/{studentId} {
+      allow read, write: if isCoach() || isOwnerOfStudent(studentId);
+    }
+  }
+}

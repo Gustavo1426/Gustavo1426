@@ -1,0 +1,17 @@
+{
+  "Macrociclo Anual": [
+    { "range": "Semanas 1-12", "title": "Acumulação", "vol": "Volumes: 8-12 séries", "tec": "Téc: Bloqueado", "minVolume": 8, "maxVolume": 12, "techniquesAllowed": false },
+    { "range": "Semanas 13-24", "title": "Progressão A", "vol": "Vol: 12-15 séries", "tec": "Téc: Bloqueado", "minVolume": 12, "maxVolume": 15, "techniquesAllowed": false },
+    { "range": "Semanas 25-36", "title": "Progressão B", "vol": "Vol: 16-20 séries", "tec": "Tec: Permitido", "minVolume": 16, "maxVolume": 20, "techniquesAllowed": true },
+    { "range": "Semanas 37-38", "title": "Descarregar", "vol": "Volume: 3-4 séries", "tec": "Téc: Bloqueado", "minVolume": 3, "maxVolume": 4, "techniquesAllowed": false },
+    { "range": "Semanas 39-46", "title": "Pico", "vol": "Volume: 20-25 séries", "tec": "Tec: Permitido", "minVolume": 20, "maxVolume": 25, "techniquesAllowed": true },
+    { "range": "Semanas 47-52", "title": "Manutenção", "vol": "Volumes: 6-8 séries", "tec": "Téc: Bloqueado", "minVolume": 6, "maxVolume": 8, "techniquesAllowed": false }
+  ],
+  "Macrociclo de Hipertrofia": [
+    { "range": "Semanas 1-6", "title": "Técnica básica", "vol": "Vol: 16-20 séries", "tec": "Téc: Bloqueado", "minVolume": 16, "maxVolume": 20, "techniquesAllowed": false },
+    { "range": "Semanas 7-10", "title": "Hipertrofia Progressiva", "vol": "Vol: 20-24 séries", "tec": "Tec: Permitido", "minVolume": 20, "maxVolume": 24, "techniquesAllowed": true },
+    { "range": "Semanas 11-17", "title": "Hipertrofia Máxima", "vol": "Vol: 24-28 séries", "tec": "Tec: Permitido", "minVolume": 24, "maxVolume": 28, "techniquesAllowed": true },
+    { "range": "Semanas 18-20", "title": "Choque / Exaustão", "vol": "Vol: 30-35 séries", "tec": "Tec: Permitido", "minVolume": 30, "maxVolume": 35, "techniquesAllowed": true },
+    { "range": "Semanas 21-23", "title": "Deload / Recuperação", "vol": "Vol: 14-20 séries", "tec": "Téc: Bloqueado", "minVolume": 14, "maxVolume": 20, "techniquesAllowed": false }
+  ]
+}

@@ -1,0 +1,170 @@
+{
+  "entities": {
+    "students": {
+      "title": "Student",
+      "description": "Student registration and profile details.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "email": { "type": "string" },
+        "phone": { "type": "string" },
+        "plan": { "type": "string" },
+        "status": { "type": "string" },
+        "avatarColor": { "type": "string" },
+        "initials": { "type": "string" },
+        "missedDays": { "type": "number" },
+        "renewalDays": { "type": "number" },
+        "lastTrainingDate": { "type": "string" },
+        "currentPhase": { "type": "string" },
+        "joinedDate": { "type": "string" },
+        "photoUrl": { "type": "string" }
+      },
+      "required": ["id", "name", "email"]
+    },
+    "workouts": {
+      "title": "Workout",
+      "description": "Workout sheets for students.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "studentId": { "type": "string" },
+        "name": { "type": "string" },
+        "lastUpdated": { "type": "string" }
+      },
+      "required": ["id", "studentId", "name"]
+    },
+    "diets": {
+      "title": "Diet",
+      "description": "Meal plans and nutritional targets for students.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "studentId": { "type": "string" },
+        "calorieTarget": { "type": "number" },
+        "proteinTarget": { "type": "number" },
+        "carbsTarget": { "type": "number" },
+        "fatTarget": { "type": "number" },
+        "lastUpdated": { "type": "string" }
+      },
+      "required": ["id", "studentId"]
+    },
+    "payments": {
+      "title": "Payment",
+      "description": "Tuition fees and payment histories.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "studentId": { "type": "string" },
+        "studentName": { "type": "string" },
+        "amount": { "type": "number" },
+        "dueDate": { "type": "string" },
+        "status": { "type": "string" }
+      },
+      "required": ["id", "studentId", "amount", "status"]
+    },
+    "plans": {
+      "title": "Plan",
+      "description": "Subscription plans available for students.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "price": { "type": "number" }
+      },
+      "required": ["id", "name", "price"]
+    },
+    "chat_histories": {
+      "title": "ChatHistory",
+      "description": "Coach AI chat interaction history.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" }
+      },
+      "required": ["id"]
+    },
+    "students_gamification": {
+      "title": "StudentGamification",
+      "description": "Gamification stats like points, level, and streak.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" }
+      },
+      "required": ["id"]
+    },
+    "challenges": {
+      "title": "Challenge",
+      "description": "Gamification challenges available.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" }
+      },
+      "required": ["id"]
+    },
+    "settings": {
+      "title": "Settings",
+      "description": "Global application and coach profile settings.",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "email": { "type": "string" },
+        "avatarUrl": { "type": "string" },
+        "monthlyGoal": { "type": "number" },
+        "aiTone": { "type": "string" }
+      }
+    },
+    "system_telemetry": {
+      "title": "SystemTelemetry",
+      "description": "System telemetry and diagnostic logs.",
+      "type": "object",
+      "properties": {
+        "timestamp": { "type": "string" },
+        "level": { "type": "string" },
+        "message": { "type": "string" }
+      },
+      "required": ["timestamp", "level", "message"]
+    }
+  },
+  "firestore": {
+    "students/{studentId}": {
+      "schema": "students",
+      "description": "Students list collection"
+    },
+    "workouts/{workoutId}": {
+      "schema": "workouts",
+      "description": "Workouts collection for students"
+    },
+    "diets/{dietId}": {
+      "schema": "diets",
+      "description": "Diets collection for students"
+    },
+    "payments/{paymentId}": {
+      "schema": "payments",
+      "description": "Payments tracking"
+    },
+    "plans/{planId}": {
+      "schema": "plans",
+      "description": "Plans configuration"
+    },
+    "chat_histories/{chatHistoryId}": {
+      "schema": "chat_histories",
+      "description": "AI Coach chat history records"
+    },
+    "students_gamification/{gamificationId}": {
+      "schema": "students_gamification",
+      "description": "Gamification metrics per student"
+    },
+    "challenges/{challengeId}": {
+      "schema": "challenges",
+      "description": "Active gamification challenges"
+    },
+    "settings/{settingId}": {
+      "schema": "settings",
+      "description": "Global system configurations"
+    },
+    "system_telemetry/{telemetryId}": {
+      "schema": "system_telemetry",
+      "description": "System telemetry log events"
+    }
+  }
+}
