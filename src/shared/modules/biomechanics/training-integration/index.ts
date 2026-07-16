@@ -65,3 +65,18 @@ export function runBiomechanicalIntegration(
     coachSummary
   };
 }
+
+// ==========================================
+// PHASE 2.0: TRAINING INTEGRATION ENGINE (V2)
+// ==========================================
+export * from "./typesV2";
+export * from "./smartWarmupEngine";
+export * from "./exerciseAdaptationEngine";
+export * from "./volumeAdjustmentEngine";
+export * from "./integrationBridge";
+
+// ==========================================
+// PHASE 2.1: ADAPTIVE DECISION ENGINE (V3)
+// ==========================================
+export * from "./decision/index";
+

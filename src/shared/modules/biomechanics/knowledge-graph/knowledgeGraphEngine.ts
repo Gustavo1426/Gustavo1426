@@ -286,3 +286,194 @@ export class KnowledgeGraphEngine {
     };
   }
 }
+
+// ============================================================================
+// 🧬 CLINICAL KNOWLEDGE GRAPH (PHASE 2.6)
+// ============================================================================
+
+export type NodeType = 
+  | "DYSFUNCTION" 
+  | "MUSCLE" 
+  | "JOINT_MECHANIC" 
+  | "CLINICAL_RISK" 
+  | "TRAINING_ACTION" 
+  | "EXERCISE"; // NOVO: Nó final palpável
+
+export interface GraphNode {
+  id: string;
+  type: NodeType;
+  label: string;
+  // Payload opcional para nós do tipo EXERCISE
+  dosage?: {
+    sets: number;
+    reps: string;
+    frequency: number;
+    phase: "warmup" | "main" | "cooldown";
+  };
+}
+
+export type EdgeRelation = 
+  | "CAUSES"               
+  | "COMPENSATES"          // NOVO: Cadeia compensatória (Ex: Tornozelo -> Joelho)
+  | "SHORTENS"             
+  | "WEAKENS"              
+  | "INHIBITS"             // NOVO: Inibição neurológica (Ex: Peitoral inibe Romboide)
+  | "OVERACTIVATES"        // NOVO: Hiperatividade compensatória
+  | "REQUIRES_MOBILITY"    // NOVO: Pré-requisito de movimento
+  | "RESTRICTS"            
+  | "INCREASES_RISK_OF"    
+  | "CORRECTED_BY"         
+  | "IMPLEMENTED_BY";      // NOVO: Ação -> Exercício Específico
+
+export interface GraphEdge {
+  sourceId: string;
+  relation: EdgeRelation;
+  targetId: string;
+  weight: number; 
+}
+
+// ==========================================
+// 2. KNOWLEDGE BASE (O Grafo Cinesiológico Completo)
+// ==========================================
+
+export const clinicalNodes: GraphNode[] = [
+  // Disfunções (A Teia de Compensação)
+  { id: "ANKLE_MOBILITY_DEFICIT", type: "DYSFUNCTION", label: "Déficit de Mobilidade de Tornozelo" },
+  { id: "DYNAMIC_KNEE_VALGUS", type: "DYSFUNCTION", label: "Valgo Dinâmico de Joelho" },
+  { id: "HIP_INTERNAL_ROTATION", type: "DYSFUNCTION", label: "Rotação Interna de Quadril Compensatória" },
+
+  // Músculos (Inibição / Hiperativação)
+  { id: "GLUTEUS_MEDIUS", type: "MUSCLE", label: "Glúteo Médio" },
+  { id: "ADDUCTOR_COMPLEX", type: "MUSCLE", label: "Complexo Adutor" },
+
+  // Riscos Clínicos
+  { id: "ACL_TEAR_RISK", type: "CLINICAL_RISK", label: "Risco de Lesão no LCA" },
+  { id: "PATELLOFEMORAL_PAIN", type: "CLINICAL_RISK", label: "Síndrome Femoropatelar" },
+
+  // Ações
+  { id: "ACTIVATE_GLUTE_MEDIUS", type: "TRAINING_ACTION", label: "Ativação de Glúteo Médio" },
+  { id: "RELEASE_ADDUCTORS", type: "TRAINING_ACTION", label: "Liberação de Adutores" },
+
+  // Exercícios Específicos (A Dose Terapêutica)
+  { 
+    id: "CLAMSHELL_BAND", 
+    type: "EXERCISE", 
+    label: "Ostra com Miniband",
+    dosage: { sets: 2, reps: "15-20", frequency: 3, phase: "warmup" }
+  },
+  { 
+    id: "FOAM_ROLLER_ADDUCTOR", 
+    type: "EXERCISE", 
+    label: "Liberação Miofascial Adutores no Rolo",
+    dosage: { sets: 1, reps: "60s/lado", frequency: 3, phase: "warmup" }
+  }
+];
+
+export const clinicalEdges: GraphEdge[] = [
+  // A Cadeia de Compensação (Tornozelo -> Joelho -> Quadril)
+  { sourceId: "ANKLE_MOBILITY_DEFICIT", relation: "COMPENSATES", targetId: "DYNAMIC_KNEE_VALGUS", weight: 0.95 },
+  { sourceId: "DYNAMIC_KNEE_VALGUS", relation: "CAUSES", targetId: "HIP_INTERNAL_ROTATION", weight: 0.85 },
+
+  // A Mecânica Muscular (Inibição e Hiperativação)
+  { sourceId: "DYNAMIC_KNEE_VALGUS", relation: "INHIBITS", targetId: "GLUTEUS_MEDIUS", weight: 0.90 },
+  { sourceId: "DYNAMIC_KNEE_VALGUS", relation: "OVERACTIVATES", targetId: "ADDUCTOR_COMPLEX", weight: 0.88 },
+
+  // Risco Clínico
+  { sourceId: "DYNAMIC_KNEE_VALGUS", relation: "INCREASES_RISK_OF", targetId: "ACL_TEAR_RISK", weight: 0.75 },
+  { sourceId: "DYNAMIC_KNEE_VALGUS", relation: "INCREASES_RISK_OF", targetId: "PATELLOFEMORAL_PAIN", weight: 0.85 },
+
+  // Caminho de Solução (Ação)
+  { sourceId: "GLUTEUS_MEDIUS", relation: "CORRECTED_BY", targetId: "ACTIVATE_GLUTE_MEDIUS", weight: 0.9 },
+  { sourceId: "ADDUCTOR_COMPLEX", relation: "CORRECTED_BY", targetId: "RELEASE_ADDUCTORS", weight: 0.9 },
+
+  // Caminho Final (Exercício + Dose)
+  { sourceId: "ACTIVATE_GLUTE_MEDIUS", relation: "IMPLEMENTED_BY", targetId: "CLAMSHELL_BAND", weight: 1.0 },
+  { sourceId: "RELEASE_ADDUCTORS", relation: "IMPLEMENTED_BY", targetId: "FOAM_ROLLER_ADDUCTOR", weight: 1.0 }
+];
+
+// ==========================================
+// 3. GRAPH INFERENCE ENGINE (Traversal)
+// ==========================================
+
+export interface CorrectivePrescription {
+  exerciseId: string;
+  exerciseName: string;
+  sets: number;
+  reps: string;
+  phase: string;
+  rationale: string; // Por que este exercício foi prescrito?
+}
+
+export interface ClinicalInference {
+  rootDysfunction: string;
+  compensatoryChain: string[];
+  affectedMuscles: { inhibited: string[], overactive: string[] };
+  clinicalRisks: string[];
+  prescriptions: CorrectivePrescription[];
+}
+
+/**
+ * Motor de Travessia do Grafo.
+ * Navega da disfunção raiz até o exercício corretivo com sua dosagem.
+ */
+export function inferClinicalPath(rootNodeId: string, confidenceThreshold: number = 0.7): ClinicalInference {
+  const inference: ClinicalInference = {
+    rootDysfunction: clinicalNodes.find(n => n.id === rootNodeId)?.label || rootNodeId,
+    compensatoryChain: [],
+    affectedMuscles: { inhibited: [], overactive: [] },
+    clinicalRisks: [],
+    prescriptions: []
+  };
+
+  const getNode = (id: string) => clinicalNodes.find(n => n.id === id);
+
+  // 1. Encontra Cadeias de Compensação
+  const compensations = clinicalEdges.filter(e => e.sourceId === rootNodeId && e.relation === "COMPENSATES");
+  compensations.forEach(comp => {
+    inference.compensatoryChain.push(getNode(comp.targetId)?.label || "");
+    
+    // 2. Musculatura Afetada pela Compensação
+    const inhibited = clinicalEdges.filter(e => e.sourceId === comp.targetId && e.relation === "INHIBITS");
+    const overactive = clinicalEdges.filter(e => e.sourceId === comp.targetId && e.relation === "OVERACTIVATES");
+    
+    inference.affectedMuscles.inhibited.push(...inhibited.map(e => getNode(e.targetId)?.label || ""));
+    inference.affectedMuscles.overactive.push(...overactive.map(e => getNode(e.targetId)?.label || ""));
+
+    // 3. Riscos Clínicos
+    const risks = clinicalEdges.filter(e => e.sourceId === comp.targetId && e.relation === "INCREASES_RISK_OF");
+    inference.clinicalRisks.push(...risks.map(e => getNode(e.targetId)?.label || ""));
+
+    // 4. Mapeamento de Soluções (Ações -> Exercícios)
+    [...inhibited, ...overactive].forEach(muscleEdge => {
+      const actions = clinicalEdges.filter(e => e.sourceId === muscleEdge.targetId && e.relation === "CORRECTED_BY");
+      
+      actions.forEach(actionEdge => {
+        const exercises = clinicalEdges.filter(e => e.sourceId === actionEdge.targetId && e.relation === "IMPLEMENTED_BY");
+        
+        exercises.forEach(exEdge => {
+          const exerciseNode = getNode(exEdge.targetId);
+          if (exerciseNode && exerciseNode.dosage) {
+            inference.prescriptions.push({
+              exerciseId: exerciseNode.id,
+              exerciseName: exerciseNode.label,
+              sets: exerciseNode.dosage.sets,
+              reps: exerciseNode.dosage.reps,
+              phase: exerciseNode.dosage.phase,
+              rationale: `Compensa a disfunção de ${getNode(muscleEdge.targetId)?.label} causada por ${getNode(comp.targetId)?.label}.`
+            });
+          }
+        });
+      });
+    });
+  });
+
+  // Limpa duplicatas
+  inference.affectedMuscles.inhibited = [...new Set(inference.affectedMuscles.inhibited)];
+  inference.affectedMuscles.overactive = [...new Set(inference.affectedMuscles.overactive)];
+  inference.clinicalRisks = [...new Set(inference.clinicalRisks)];
+  
+  // Dedup de prescrições pelo ID do exercício
+  inference.prescriptions = Array.from(new Map(inference.prescriptions.map(item => [item.exerciseId, item])).values());
+
+  return inference;
+}

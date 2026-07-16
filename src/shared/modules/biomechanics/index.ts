@@ -149,6 +149,9 @@ export * from "./body-analysis/symmetryAnalyzer";
 export * from "./body-analysis/alignmentAnalyzer";
 export * from "./body-analysis/measurementEngine";
 export * from "./body-analysis/bodyRegionAnalyzer";
+export * from "./body-analysis/mobilityAnalyzer";
+export * from "./body-analysis/compensationDetector";
+export * from "./body-analysis/bodyAnalysisService";
 
 export {
   type CompensationPattern,
@@ -162,7 +165,21 @@ export * from "./biomechanical/compensationDetector";
 export * from "./biomechanical/movementRiskAnalyzer";
 export * from "./biomechanical/mobilityInference";
 export * from "./biomechanical/muscleBalanceAnalyzer";
-export * from "./biomechanical/biomechanicsEngine";
+export * from "./biomechanical/anatomicalRules";
+export * from "./biomechanical/movementRules";
+export * from "./biomechanical/riskAnalyzer";
+
+export {
+  analyzeTrainingImpact,
+  type TrainingImpact as BiomechanicalTrainingImpact
+} from "./biomechanical/impactAnalyzer";
+
+export {
+  runBiomechanicalEngine,
+  runBiomechanicsEngine,
+  type BiomechanicalReport,
+  type BiomechanicalFinding as BiomechanicalFindingPhase15
+} from "./biomechanical/biomechanicsEngine";
 
 export * from "./types/interpretation.types";
 export * from "./interpretation/findingTranslator";
@@ -179,7 +196,9 @@ export * from "./scoring/postureScore";
 export * from "./scoring/symmetryScore";
 export * from "./scoring/alignmentScore";
 export * from "./scoring/mobilityScore";
-export * from "./scoring/riskScore";
+export { calculateRiskScore, calculateRiskLevel } from "./scoring/riskScore";
+export * from "./scoring/movementScore";
+export * from "./scoring/biomechanicalScoreEngine";
 export * from "./scoring/scoreCalculator";
 
 export * from "./types/recommendation.types";
@@ -209,10 +228,28 @@ export * from "./evolution/progressAnalyzer";
 export * from "./evolution/improvementDetector";
 export * from "./evolution/regressionDetector";
 export * from "./evolution/evolutionScore";
-export * from "./evolution/workoutAdjustmentBridge";
+export {
+  generateWorkoutEngineTriggers,
+  generateTrainingAdjustments as generateEvolutionTrainingAdjustments
+} from "./evolution/workoutAdjustmentBridge";
+export * from "./evolution/types";
+export * from "./evolution/scoreComparator";
+export * from "./evolution/findingTracker";
+export * from "./evolution/regionalEvolution";
+export * from "./evolution/timelineGenerator";
+export * from "./evolution/evolutionNarrative";
 export * from "./evolution/evolutionEngine";
 
 export * from "./training-integration/index";
+
+// ==========================================
+// RULES
+// ==========================================
+export * from "./rules/exerciseRestrictionRules";
+export * from "./rules/volumeAdjustmentRules";
+export * from "./rules/warmupRules";
+export * from "./rules/adaptationRules";
+
 export * from "./ai-coach/index";
 export * from "./decision-intelligence/index";
 export * from "./knowledge-graph/index";
@@ -222,4 +259,5 @@ export * from "./adaptive-learning/index";
 export * from "./unified-platform/index";
 export * from "./exercise-intelligence/index";
 export * from "./human-adaptation/index";
+export * from "./capture/index";
 export type { MovementPattern } from "./knowledge-graph/index";

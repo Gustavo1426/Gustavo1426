@@ -4,6 +4,8 @@
  * ============================================================================
  */
 
+export * from "./types/decisionTypes";
+export * from "./memory";
 export * from "../types/decision.types";
 export * from "./policyDefinitions";
 export * from "./decisionContextBuilder";

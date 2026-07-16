@@ -1,52 +1,51 @@
 /**
  * ============================================================================
- * WORKOUT ACADEMIA - BIOMECHANICS AI MODULE: VISION ENGINE ORCHESTRATOR
+ * WORKOUT ACADEMIA - BIOMECHANICS AI MODULE: VISION ENTRYPOINT
  * ============================================================================
  */
 
-import { PoseInput, VisionAnalysis } from "../types/vision.types";
+import { Landmark } from "../types/landmark.types";
+import { PoseInput } from "../types/vision.types";
 import { detectPose } from "./poseDetector";
 import { extractAndMapLandmarks } from "./landmarkExtractor";
 import { analyzeLandmarksConfidence } from "./confidenceAnalyzer";
-import { buildBodySkeleton } from "./skeletonBuilder";
+
+export * from "./landmarkDetector";
+export * from "./confidenceCalculator";
+export * from "./bodyMapper";
+
+export interface VisionEngineResult {
+  photoId: string;
+  detected: boolean;
+  landmarks: Landmark[];
+  confidence: number;
+  lowConfidenceJoints: string[];
+}
 
 /**
- * Orquestrador principal da Camada de Visão Computacional.
- * Transforma uma foto aprovada em representações de pontos e esqueletos normalizados.
+ * Ponto de entrada padrão para o processamento de visão computacional.
+ * Detecta pose (MediaPipe), extrai marcos anatômicos calibrados e valida confiança.
  */
 export async function runVisionEngine(
   photoId: string,
   input: PoseInput,
-  canvasWidth: number = 1080,
-  canvasHeight: number = 1920
-): Promise<VisionAnalysis> {
-  
-  // 1. Detectar pose primária com rede neural
+  screenWidth: number,
+  screenHeight: number
+): Promise<VisionEngineResult> {
+  // 1. Executa detecção da pose
   const detection = await detectPose(input);
-  if (!detection.detected) {
-    throw new Error("Pose não pôde ser detectada na imagem fornecida.");
-  }
 
-  // 2. Filtrar e mapear landmarks anatômicos estruturados com normalização espacial
-  const mappedLandmarks = extractAndMapLandmarks(detection.landmarks, canvasWidth, canvasHeight);
+  // 2. Extrai e mapeia landmarks normativos
+  const landmarks = extractAndMapLandmarks(detection.landmarks, screenWidth, screenHeight);
 
-  // 3. Validar consistência e qualidade estatística dos pontos (Análise de Oclusão)
-  const confidenceAssessment = analyzeLandmarksConfidence(mappedLandmarks);
-  if (!confidenceAssessment.valid) {
-    throw new Error(
-      `Falha de confiança na detecção corporal dos pontos: [${confidenceAssessment.lowConfidenceJoints.join(", ")}]. Por favor, tire uma nova foto.`
-    );
-  }
-
-  // 4. Montar malha e conexões do esqueleto
-  const skeleton = buildBodySkeleton(mappedLandmarks);
+  // 3. Analisa a confiabilidade geral
+  const confidenceResult = analyzeLandmarksConfidence(landmarks);
 
   return {
     photoId,
-    poseDetected: true,
-    overallConfidence: confidenceAssessment.overallConfidence,
-    landmarks: mappedLandmarks,
-    skeleton
+    detected: detection.detected,
+    landmarks,
+    confidence: confidenceResult.overallConfidence,
+    lowConfidenceJoints: confidenceResult.lowConfidenceJoints
   };
 }
-export * from "../types/vision.types";
